@@ -1,7 +1,6 @@
 #-*- coding: utf-8 -*-
 
-import datetime
-
+from django.forms import ModelForm
 from django.db import models
 
 class Message(models.Model):
@@ -14,3 +13,7 @@ class Message(models.Model):
 
 	def __unicode__(self):
 		return '%s : (%s) %s' % (self.id, self.formatedDatetime(), self.body)
+
+class MessageForm(ModelForm):
+	class Meta:
+		model = Message

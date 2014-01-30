@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
-from message.views import MessageListView
+from message.views import MessageFormView
 
 admin.autodiscover()
 
@@ -19,6 +19,6 @@ urlpatterns = patterns('',
 	),
 
 	url(r'^message/$',
-		MessageListView.as_view()
+		MessageFormView.as_view()
 	),
 )

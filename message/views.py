@@ -1,11 +1,15 @@
 from django.shortcuts import get_object_or_404, get_list_or_404
-from django.views.generic import ListView
+from django.views.generic import FormView
 
-from message.models import Message
+from message.models import Message, MessageForm
 
-class MessageListView(ListView):
+class MessageFormView(FormView):
 
-	template_name = 'message/index.html'
+	template_name = 'message/form.html'
+	form_class = MessageForm
 
-	def get_queryset(self):
-		return Message.objects.all()
+	def get_context_data(self, **kwargs):
+		context = super(MessageFormView, self).get_context_data(**kwargs)
+		context['message_list'] = Message.objects.all()
+
+		return context
