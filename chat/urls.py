@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.views.generic import CreateView
 
 from message.models import MessageForm
-from message.views import MessageFormView
+from message.views import MessageFormView, MessageCreateView
 
 admin.autodiscover()
 
@@ -25,10 +25,14 @@ urlpatterns = patterns('',
 	),
 
 	url(r'^message/create/$',
-		CreateView.as_view(
-			form_class = MessageForm,
-			template_name = 'message/form.html',
-			success_url = '/message/',
-		)
+		MessageCreateView.as_view()
 	),
+
+#	url(r'^message/create/$',
+#		CreateView.as_view(
+#			form_class = MessageForm,
+#			template_name = 'message/form.html',
+#			success_url = '/message/',
+#		)
+#	),
 )

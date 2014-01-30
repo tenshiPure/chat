@@ -15,6 +15,9 @@
 			{% if message.ref %}
 				<p class="ref">>>>&nbsp{{ message.ref.body }}</p>
 			{% endif %}
+			{% if message.tag %}
+				<p class="tag">#{{ message.tag.body }}</p>
+			{% endif %}
 		</div>
 		<hr>
 	{% empty %}
