@@ -1,0 +1,28 @@
+#container 
+{
+	width: 100%;
+}
+
+#header
+{
+	float: right;
+}
+
+#left
+{
+	float: left;
+	width: 20%;
+}
+
+#main
+{
+	float: left;
+	width: 75%;
+	background-color : #eeeeee;
+}
+
+#footer
+{
+	clear: left;
+	width: 100%;
+}

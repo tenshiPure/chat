@@ -1,0 +1,18 @@
+<div class="validation">
+	{% if form.errors %}
+		error.
+	{% endif %}
+
+	<form method="post" action=".">
+		<label for="username">name：</label>
+		{{ form.username }}
+		<br />
+		<label for="password">pass：</label>
+		{{ form.password }}
+		<br />
+		<input type="submit" value="login" />
+		{% csrf_token %}
+	</form>
+
+	<a href="/user/form/">user registration.</a>
+</div>

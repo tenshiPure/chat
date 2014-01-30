@@ -1,0 +1,13 @@
+{% extends "common/base.html" %}
+{% block title %}{{ group.name }} message{% endblock %}
+
+{% block main %}
+	{% for message in message_list %}
+		<div class="message">
+			<p class="datetime">{{ message.formatedDatetime }}</p>
+			<p class="body">{{ message.body }}</p>
+		</div>
+	{% empty %}
+		<p>No messages.</p>
+	{% endfor %}
+{% endblock %}

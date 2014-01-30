@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		{% load staticfiles %}
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		{% for csspath in csspath_list %}
+			<link rel="stylesheet" type="text/css" href="{% static csspath %}">
+		{% endfor %}
+		<link rel="stylesheet" type="text/css" href="{% static "css/common.css" %}">
+		<title>{% block title %}{% endblock %}</title>
+	</head>
+	<body>
+		<div id="container">
+
+			<div id="header">
+				{{user.username}} logined.
+				<a href="/user/form/">user registration.</a>
+				<a href="/logout/">logout</a>
+			</div>
+
+			<div id="left">
+				左の方<br>
+				左の方<br>
+				左の方<br>
+			</div>
+
+			<div id="main">
+				{% block main %}
+				{% endblock %}
+			</div>
+
+			<div id="footer">
+				下の方<br>
+				下の方<br>
+				下の方<br>
+			</div>
+
+		</div>
+	</body>
+</html>
