@@ -1,6 +1,8 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+from django.views.generic import CreateView
 
+from message.models import MessageForm
 from message.views import MessageFormView
 
 admin.autodiscover()
@@ -20,5 +22,13 @@ urlpatterns = patterns('',
 
 	url(r'^message/$',
 		MessageFormView.as_view()
+	),
+
+	url(r'^message/create/$',
+		CreateView.as_view(
+			form_class = MessageForm,
+			template_name = 'message/form.html',
+			success_url = '/message/',
+		)
 	),
 )

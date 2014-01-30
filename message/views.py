@@ -10,6 +10,6 @@ class MessageFormView(FormView):
 
 	def get_context_data(self, **kwargs):
 		context = super(MessageFormView, self).get_context_data(**kwargs)
-		context['message_list'] = Message.objects.all()
+		context['message_list'] = Message.objects.all().order_by('-id')
 
 		return context
