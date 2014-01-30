@@ -11,6 +11,7 @@ class MessageFormView(FormView):
 	def get_context_data(self, **kwargs):
 		context = super(MessageFormView, self).get_context_data(**kwargs)
 		context['message_list'] = Message.objects.all().order_by('-id')
+		context['css_list'] = ['css/message.css']
 
 		return context
 

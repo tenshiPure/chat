@@ -1,0 +1,52 @@
+.message
+{
+	margin : 10px 10px 10px 10px;
+	background-color : #f9f9f9;
+}
+
+.form_body
+{
+	margin : 7px 0px 0px 7px;
+	clear : both;
+}
+
+.form_ref
+{
+	margin : 3px 0px 0px 10px;
+}
+
+.form_tag
+{
+	margin : 3px 0px 0px 10px;
+}
+
+.datetime 
+{
+	margin : 5px 5px 10px 0px;
+	float : right;
+}
+
+.body
+{
+	margin : 0px 0px 10px 5px;
+	clear : both;
+}
+
+.ref_mark
+{
+	width : 5%;
+	float : left;
+}
+
+.ref_body
+{
+	width : 95%;
+	margin : 0px 0px 10px 0px;
+	float : left;
+}
+
+.tag
+{
+	margin : 10px 0px 5px 5px;
+	clear : both;
+}

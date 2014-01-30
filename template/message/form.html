@@ -3,7 +3,9 @@
 
 {% block main %}
 	<form method="post" action="/message/create/">
-		{{ form.as_p }}
+		<p class="form_body">{{ form.body }}</p>
+		<p class="form_ref">ref : {{ form.ref }}</p>
+		<p class="form_tag">tag : {{ form.tag }} or {{ form.tag_create }}</p>
 		{% csrf_token %}
 		<input type="submit" value="submit" />
 	</form>
@@ -11,15 +13,15 @@
 	{% for message in message_list %}
 		<div class="message">
 			<p class="datetime">{{ message.formatedDatetime }}</p>
-			<p class="body">{{ message.body }}</p>
+			<p class="body">{{ message.body|linebreaksbr }}</p>
 			{% if message.ref %}
-				<p class="ref">>>>&nbsp{{ message.ref.body }}</p>
+				<div class="ref_mark">&nbsp;&gt;&gt;&gt;&nbsp;</div>
+				<div class="ref_body">{{ message.ref.body|linebreaksbr }}</div>
 			{% endif %}
 			{% if message.tag %}
 				<p class="tag">#{{ message.tag.body }}</p>
 			{% endif %}
 		</div>
-		<hr>
 	{% empty %}
 		<p>No messages.</p>
 	{% endfor %}
