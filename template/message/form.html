@@ -3,29 +3,29 @@
 {% block title %}{{ group.name }} message{% endblock %}
 
 {% block main %}
-	<form id="form" method="post" action="/message/create/">
-		<p id="form_body">{{ form.body }}</p>
-		<p id="form_ref">ref : {{ form.ref }}</p>
-		<p id="form_tag">tag : {{ form.tag }} or {{ form.tag_create }}</p>
+	<form id="id_form_form" method="post" action="/message/create/">
+		<p id="id_form_body">{{ form.body }}</p>
+		<p id="id_form_ref">ref : {{ form.ref }}</p>
+		<p id="id_form_tag">tag : {{ form.tag }} or {{ form.tag_create }}</p>
 		{% csrf_token %}
 	</form>
 
 	{% for message in message_list %}
-		<div class="message">
-			<p class="datetime">{{ message.formatedDatetime }}</p>
-			<p class="body">
+		<div class="class_message">
+			<p class="class_datetime">{{ message.formatedDatetime }}</p>
+			<p class="class_body">
 				{{ message.body|linebreaksbr }}
-				<img id="{{ forloop.counter }}" class="re" src="{% static "image/re.png" %}" width="20px" height="20px">
+				<img id="id_re_parts_{{ forloop.counter }}" class="class_re_parts" src="{% static "image/re.png" %}" value="{{ forloop.counter }}" />
 			</p>
 			<input type="hidden" id="id_body_{{ forloop.counter }}" value="{{ message.id }}" />
 			
 			{% if message.ref %}
-				<div class="ref_mark">&nbsp;&gt;&gt;&gt;&nbsp;</div>
-				<div class="ref_body">{{ message.ref.body|linebreaksbr }}</div>
+				<div class="class_refmark">&nbsp;&gt;&gt;&gt;&nbsp;</div>
+				<div class="class_refbody">{{ message.ref.body|linebreaksbr }}</div>
 				<input type="hidden" id="id_ref_{{ forloop.counter }}" value="{{ message.ref.id }}" />
 			{% endif %}
 			{% if message.tag %}
-				<p class="tag">#{{ message.tag.body }}</p>
+				<p class="class_tag">#{{ message.tag.body }}</p>
 				<input type="hidden" id="id_tag_{{ forloop.counter }}" value="{{ message.tag.id }}" />
 			{% endif %}
 		</div>

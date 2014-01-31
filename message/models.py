@@ -1,7 +1,7 @@
 #-*- coding: utf-8 -*-
 
 from django import forms
-from django.forms import ModelForm, Textarea
+from django.forms import ModelForm
 from django.db import models
 
 class Tag(models.Model):
@@ -31,14 +31,10 @@ class Message(models.Model):
 
 class MessageForm(ModelForm):
 
-	body       = forms.CharField(label = '', widget = Textarea(attrs = {'cols' : 80, 'rows' : 5}))
-	tag_create = forms.CharField(label = '', required = False)
-	ref        = forms.ModelChoiceField(queryset = Message.objects.all().order_by('-id'), label = '', required = False)
-	tag        = forms.ModelChoiceField(queryset = Tag.objects.all().order_by('updateDate'), label = '', required = False)
+	body       = forms.CharField(label = '', widget = forms.Textarea(attrs = {'class' : 'class_form_input', 'cols' : 80, 'rows' : 5}))
+	tag_create = forms.CharField(label = '', required = False, widget = forms.TextInput(attrs = {'class' : 'class_form_input'}))
+	ref        = forms.ModelChoiceField(queryset = Message.objects.all().order_by('-id'), label = '', required = False, widget = forms.Select(attrs = {'class' : 'class_form_input'}))
+	tag        = forms.ModelChoiceField(queryset = Tag.objects.all().order_by('updateDate'), label = '', required = False, widget = forms.Select(attrs = {'class' : 'class_form_input'}))
 
 	class Meta:
 		model = Message
-#		widgets = {
-#			'body' : Textarea(attrs = {'cols' : 80, 'rows' : 5})
-#		}
-		exclude = ('tag',)

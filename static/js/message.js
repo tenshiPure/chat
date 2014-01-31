@@ -1,8 +1,8 @@
 $(function() {
-	$('#id_body').keydown(down);
-	$('#id_body').keyup(up);
+	$('.class_form_input').keydown(down);
+	$('.class_form_input').keyup(up);
 	$('#id_tag').change(change);
-	$('.re').click(setInit);
+	$('.class_re_parts').click(setInit);
 });
 
 submit_key = function(e) {
@@ -17,23 +17,31 @@ down = function(e) {
 };
 
 up = function(e) {
-	if (submit_key(e))
-		$('#form').submit();
+	if (submit_key(e)) {
+		var text = $('#id_body').val();
+		text = text.replace(/^[ 　]*/gim, "").replace(/[ 　]*$/gim, "").replace(/[\n]*$/gim, "").replace(/[\r\n]*$/gim, "");
+		if (text.length != 0)
+			$('#id_form_form').submit();
+	}
 }
 
 change = function() {
-	val = $('#id_tag').val();
-	if (val != '')
-		$('#id_tag_create').prop('disabled', true);
-	else
-		$('#id_tag_create').prop('disabled', false);
+	var val = $('#id_tag').val();
+	if (val != '') {
+		$('#id_tag_create').prop('readonly', true);
+		$('#id_tag_create').css({'background-color' : '#F0F0F0'});
+	}
+	else {
+		$('#id_tag_create').prop('readonly', false);
+		$('#id_tag_create').css({'background-color' : '#FFFFFF'});
+	}
 }
 
 setInit = function(e) {
-	id = e.target.id;
+	var id = e.target.id.split('_')[3];
 
-	body_id = $('#id_body_' + id).val()
-	tag_id = $('#id_tag_' + id).val()
+	var body_id = $('#id_body_' + id).val()
+	var tag_id = $('#id_tag_' + id).val()
 
 	$('#id_ref').val(body_id);
 

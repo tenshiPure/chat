@@ -1,4 +1,4 @@
-.message
+.class_message
 {
 	margin : 10px 10px 10px 10px;
 	background-color : #f9f9f9;
@@ -9,52 +9,54 @@
 	width : 730px;
 }
 
-#form_body
+#id_form_body
 {
 	margin : 7px 0px 0px 7px;
 	clear : both;
 }
 
-#form_ref
+#id_form_ref
 {
 	margin : 3px 0px 0px 10px;
 }
 
-#form_tag
+#id_form_tag
 {
 	margin : 3px 0px 0px 10px;
 }
 
-.datetime 
+.class_datetime 
 {
 	margin : 5px 5px 10px 0px;
 	float : right;
 }
 
-.body
+.class_body
 {
 	margin : 0px 0px 10px 5px;
 	clear : both;
 }
 
-.re
+.class_re_parts
 {
 	vertical-align : -3px;
+	width : 20px;
+	height : 20px;
 }
 
-.ref_mark
+.class_refmark
 {
 	width : 35px;
 	float : left;
 }
 
-.ref_body
+.class_refbody
 {
 	margin : 0px 0px 10px 0px;
 	float : left;
 }
 
-.tag
+.class_tag
 {
 	margin : 0px 0px 0px 5px;
 	clear : both;
