@@ -2,7 +2,7 @@
 {% block title %}{{ group.name }} message{% endblock %}
 
 {% block main %}
-	<form method="post" action="/message/create/">
+	<form id="form" method="post" action="/message/create/">
 		<p id="form_body">{{ form.body }}</p>
 		<p id="form_ref">ref : {{ form.ref }}</p>
 		<p id="form_tag">tag : {{ form.tag }} or {{ form.tag_create }}</p>
@@ -14,12 +14,16 @@
 		<div class="message">
 			<p class="datetime">{{ message.formatedDatetime }}</p>
 			<p class="body">{{ message.body|linebreaksbr }}</p>
+			<input type="hidden" id="id_body_{{ forloop.counter }}" value="{{ message.id }}" />
+			<input type="button" id={{ forloop.counter }}	 class="re" value="re" /><br>
 			{% if message.ref %}
 				<div class="ref_mark">&nbsp;&gt;&gt;&gt;&nbsp;</div>
 				<div class="ref_body">{{ message.ref.body|linebreaksbr }}</div>
+				<input type="hidden" id="id_ref_{{ forloop.counter }}" value="{{ message.ref.id }}" />
 			{% endif %}
 			{% if message.tag %}
 				<p class="tag">#{{ message.tag.body }}</p>
+				<input type="hidden" id="id_tag_{{ forloop.counter }}" value="{{ message.tag.id }}" />
 			{% endif %}
 		</div>
 	{% empty %}

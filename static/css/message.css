@@ -32,6 +32,11 @@
 	clear : both;
 }
 
+.re
+{
+	float : left;
+}
+
 .ref_mark
 {
 	width : 5%;
