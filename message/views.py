@@ -45,3 +45,11 @@ class MessageCreateView(CreateView):
 			return tag
 		else:
 			return None
+
+	def get_context_data(self, **kwargs):
+		context = super(MessageCreateView, self).get_context_data(**kwargs)
+		context['message_list'] = Message.objects.all().order_by('-id')
+		context['css_list'] = ['css/message.css']
+		context['js_list'] = ['js/message.js']
+
+		return context

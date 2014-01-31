@@ -1,6 +1,7 @@
 $(function() {
 	$('#id_body').keydown(down);
 	$('#id_body').keyup(up);
+	$('#id_tag').change(change);
 	$('.re').click(setInit);
 });
 
@@ -20,6 +21,14 @@ up = function(e) {
 		$('#form').submit();
 }
 
+change = function() {
+	val = $('#id_tag').val();
+	if (val != '')
+		$('#id_tag_create').prop('disabled', true);
+	else
+		$('#id_tag_create').prop('disabled', false);
+}
+
 setInit = function(e) {
 	id = e.target.id;
 
@@ -32,6 +41,7 @@ setInit = function(e) {
 		$('#id_tag').val(tag_id);
 	else
 		$('#id_tag').val('');
+	change();
 
 	$('#id_body').focus();
 }

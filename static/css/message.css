@@ -4,6 +4,11 @@
 	background-color : #f9f9f9;
 }
 
+#id_body
+{
+	width : 730px;
+}
+
 #form_body
 {
 	margin : 7px 0px 0px 7px;
@@ -34,24 +39,23 @@
 
 .re
 {
-	float : left;
+	vertical-align : -3px;
 }
 
 .ref_mark
 {
-	width : 5%;
+	width : 35px;
 	float : left;
 }
 
 .ref_body
 {
-	width : 95%;
 	margin : 0px 0px 10px 0px;
 	float : left;
 }
 
 .tag
 {
-	margin : 10px 0px 5px 5px;
+	margin : 0px 0px 0px 5px;
 	clear : both;
 }

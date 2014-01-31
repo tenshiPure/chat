@@ -38,7 +38,7 @@ class MessageForm(ModelForm):
 
 	class Meta:
 		model = Message
-		widgets = {
-			'body' : Textarea(attrs = {'cols' : 80, 'rows' : 5})
-		}
+#		widgets = {
+#			'body' : Textarea(attrs = {'cols' : 80, 'rows' : 5})
+#		}
 		exclude = ('tag',)

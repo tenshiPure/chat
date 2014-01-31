@@ -1,4 +1,5 @@
 {% extends "common/base.html" %}
+{% load staticfiles %}
 {% block title %}{{ group.name }} message{% endblock %}
 
 {% block main %}
@@ -7,15 +8,17 @@
 		<p id="form_ref">ref : {{ form.ref }}</p>
 		<p id="form_tag">tag : {{ form.tag }} or {{ form.tag_create }}</p>
 		{% csrf_token %}
-		<input type="submit" value="submit" />
 	</form>
 
 	{% for message in message_list %}
 		<div class="message">
 			<p class="datetime">{{ message.formatedDatetime }}</p>
-			<p class="body">{{ message.body|linebreaksbr }}</p>
+			<p class="body">
+				{{ message.body|linebreaksbr }}
+				<img id="{{ forloop.counter }}" class="re" src="{% static "image/re.png" %}" width="20px" height="20px">
+			</p>
 			<input type="hidden" id="id_body_{{ forloop.counter }}" value="{{ message.id }}" />
-			<input type="button" id={{ forloop.counter }}	 class="re" value="re" /><br>
+			
 			{% if message.ref %}
 				<div class="ref_mark">&nbsp;&gt;&gt;&gt;&nbsp;</div>
 				<div class="ref_body">{{ message.ref.body|linebreaksbr }}</div>
