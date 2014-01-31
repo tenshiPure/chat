@@ -33,11 +33,12 @@ class MessageForm(ModelForm):
 
 	body       = forms.CharField(label = '', widget = Textarea(attrs = {'cols' : 80, 'rows' : 5}))
 	tag_create = forms.CharField(label = '', required = False)
-	ref        = forms.ModelChoiceField(queryset = Message.objects.all().order_by('-id'), label = '')
-	tag        = forms.ModelChoiceField(queryset = Tag.objects.all().order_by('updateDate'), label = '')
+	ref        = forms.ModelChoiceField(queryset = Message.objects.all().order_by('-id'), label = '', required = False)
+	tag        = forms.ModelChoiceField(queryset = Tag.objects.all().order_by('updateDate'), label = '', required = False)
 
 	class Meta:
 		model = Message
 		widgets = {
 			'body' : Textarea(attrs = {'cols' : 80, 'rows' : 5})
 		}
+		exclude = ('tag',)

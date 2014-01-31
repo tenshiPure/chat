@@ -3,9 +3,9 @@
 
 {% block main %}
 	<form method="post" action="/message/create/">
-		<p class="form_body">{{ form.body }}</p>
-		<p class="form_ref">ref : {{ form.ref }}</p>
-		<p class="form_tag">tag : {{ form.tag }} or {{ form.tag_create }}</p>
+		<p id="form_body">{{ form.body }}</p>
+		<p id="form_ref">ref : {{ form.ref }}</p>
+		<p id="form_tag">tag : {{ form.tag }} or {{ form.tag_create }}</p>
 		{% csrf_token %}
 		<input type="submit" value="submit" />
 	</form>

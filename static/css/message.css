@@ -4,18 +4,18 @@
 	background-color : #f9f9f9;
 }
 
-.form_body
+#form_body
 {
 	margin : 7px 0px 0px 7px;
 	clear : both;
 }
 
-.form_ref
+#form_ref
 {
 	margin : 3px 0px 0px 10px;
 }
 
-.form_tag
+#form_tag
 {
 	margin : 3px 0px 0px 10px;
 }

@@ -27,12 +27,4 @@ urlpatterns = patterns('',
 	url(r'^message/create/$',
 		MessageCreateView.as_view()
 	),
-
-#	url(r'^message/create/$',
-#		CreateView.as_view(
-#			form_class = MessageForm,
-#			template_name = 'message/form.html',
-#			success_url = '/message/',
-#		)
-#	),
 )
