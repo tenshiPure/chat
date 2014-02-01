@@ -25,6 +25,12 @@
 	margin : 3px 0px 0px 10px;
 }
 
+.class_username 
+{
+	margin : 5px 0px 10px 5px;
+	float : left;
+}
+
 .class_datetime 
 {
 	margin : 5px 5px 10px 0px;
@@ -42,18 +48,6 @@
 	vertical-align : -3px;
 	width : 20px;
 	height : 20px;
-}
-
-.class_refmark
-{
-	width : 35px;
-	float : left;
-}
-
-.class_refbody
-{
-	margin : 0px 0px 10px 0px;
-	float : left;
 }
 
 .class_tag

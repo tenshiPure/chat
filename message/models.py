@@ -3,6 +3,7 @@
 from django import forms
 from django.forms import ModelForm
 from django.db import models
+from django.contrib.auth.models import User
 
 class Tag(models.Model):
 
@@ -20,14 +21,16 @@ class Message(models.Model):
 
 	body     = models.TextField()
 	datetime = models.DateTimeField(u'送信日時', auto_now_add = True)
-	ref      = models.OneToOneField('self', null = True, blank = True)
+#	ref      = models.OneToOneField('self', null = True, blank = True)
+	ref      = models.ForeignKey('self', null = True, blank = True)
 	tag      = models.ForeignKey(Tag, null = True, blank = True, related_name = 'tag')
+	user     = models.ForeignKey(User)
 
 	def formatedDatetime(self):
 		return self.datetime.strftime('%Y-%m-%d %H:%M')
 
 	def __unicode__(self):
-		return self.body[0:40]
+		return '%s - %s' % (self.user.username, self.body[0:40])
 
 class MessageForm(ModelForm):
 
@@ -38,3 +41,4 @@ class MessageForm(ModelForm):
 
 	class Meta:
 		model = Message
+		exclude = ('user',)

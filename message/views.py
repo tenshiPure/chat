@@ -27,7 +27,7 @@ class MessageCreateView(CreateView):
 		ref  = self.createRef(self.request.POST['ref'])
 		tag  = self.createTag(self.request.POST['tag'], self.request.POST['tag_create'])
 
-		object = Message(body = body, tag = tag, ref = ref)
+		object = Message(body = body, tag = tag, ref = ref, user = self.request.user)
 		object.save()
 
 		return redirect(self.success_url)

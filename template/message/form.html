@@ -12,6 +12,7 @@
 
 	{% for message in message_list %}
 		<div class="class_message">
+			<p class="class_username">{{ message.user.username }}</p>
 			<p class="class_datetime">{{ message.formatedDatetime }}</p>
 			<p class="class_body">
 				{{ message.body|linebreaksbr }}
@@ -20,8 +21,7 @@
 			<input type="hidden" id="id_body_{{ forloop.counter }}" value="{{ message.id }}" />
 			
 			{% if message.ref %}
-				<div class="class_refmark">&nbsp;&gt;&gt;&gt;&nbsp;</div>
-				<div class="class_refbody">{{ message.ref.body|linebreaksbr }}</div>
+				<span>&nbsp;&gt;&gt;&gt;&nbsp;</span>
 				<input type="hidden" id="id_ref_{{ forloop.counter }}" value="{{ message.ref.id }}" />
 			{% endif %}
 			{% if message.tag %}

@@ -1,0 +1,12 @@
+{% extends "common/base.html" %}
+{% block title %}user form{% endblock %}
+
+{% block main %}
+	<form action="/user/create/" method="post">
+		<table>
+			{{ form }}
+		</table>
+		{% csrf_token %}
+		<input type="submit" value="submit" />
+	</form>
+{% endblock %}
