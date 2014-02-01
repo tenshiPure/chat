@@ -1,0 +1,11 @@
+{% extends "common/base.html" %}
+{% load staticfiles %}
+{% block title %}{{ group.name }} タグ{% endblock %}
+
+{% block main %}
+	{% for tag in tag_list %}
+		<p>{{ tag.body }} / {{ tag.formatedDatetime }}</p>
+	{% empty %}
+		<p>No tags.</p>
+	{% endfor %}
+{% endblock %}

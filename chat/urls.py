@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.views.generic import CreateView, FormView
 
 from message.models import MessageForm
-from message.views import MessageFormView, MessageCreateView
+from message.views import MessageFormView, MessageCreateView, TagListView
 
 admin.autodiscover()
 
@@ -40,7 +40,11 @@ urlpatterns = patterns('',
 		MessageFormView.as_view()
 	),
 
-	url(r'^message/create/$',
+	url(r'^message/create/(\d+)$',
 		MessageCreateView.as_view()
+	),
+
+	url(r'^tag/(\d+)$',
+		TagListView.as_view()
 	),
 )

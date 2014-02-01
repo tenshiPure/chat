@@ -1,7 +1,6 @@
 from django.shortcuts import redirect
-from django.db.models import Q
 from django.contrib.auth.models import Group
-from django.views.generic import FormView, CreateView
+from django.views.generic import ListView, FormView, CreateView
 
 from message.models import Message, MessageForm, Tag
 
@@ -11,17 +10,14 @@ class MessageFormView(FormView):
 	form_class = MessageForm
 
 	def get_context_data(self, **kwargs):
-		group_id = self.args[0]
-		tag_id = self.args[1]
-		group = Group.objects.get(pk = group_id)
+		group = Group.objects.get(pk = self.args[0])
 
 		context = super(MessageFormView, self).get_context_data(**kwargs)
+		message_list = Message.objects.filter(group = group)
+		if self.args[1]:
+			message_list = message_list.filter(tag_id = self.args[1])
 
-		if tag_id:
-			context['message_list'] = Message.objects.filter(Q(group = group) & Q(tag_id = tag_id)).order_by('-id')
-		else:
-			context['message_list'] = Message.objects.filter(group = group).order_by('-id')
-
+		context['message_list'] = message_list.order_by('-id')
 		context['group'] = group
 		context['css_list'] = ['css/message.css']
 		context['js_list'] = ['js/message.js']
@@ -34,10 +30,10 @@ class MessageCreateView(CreateView):
 	template_name = 'message/form.html'
 
 	def form_valid(self, form):
+		group = self.createGroup(self.request.POST['group'])
 		body  = self.request.POST['body']
 		ref   = self.createRef(self.request.POST['ref'])
-		tag   = self.createTag(self.request.POST['tag'], self.request.POST['tag_create'])
-		group = self.createGroup(self.request.POST['group'])
+		tag   = self.createTag(self.request.POST['tag'], self.request.POST['tag_create'], group)
 
 		object = Message(body = body, tag = tag, ref = ref, user = self.request.user, group = group)
 		object.save()
@@ -47,14 +43,20 @@ class MessageCreateView(CreateView):
 	def createRef(self, ref):
 		return Message.objects.get(pk = ref) if ref else None
 
-	def createTag(self, tag, create):
+	def createTag(self, tag, create, group):
 		if tag:
-			return Tag.objects.get(pk = tag)
+			result = Tag.objects.get(pk = tag)
+			result.save()
+			return result
 		elif create:
-			tag = Tag(body = create)
-			tag.save()
-
-			return tag
+			result = Tag.objects.filter(body = create).filter(group = group)[0]
+			if result:
+				result.save()
+				return result
+			else:
+				result = Tag(body = create, group = group)
+				result.save()
+				return result
 		else:
 			return None
 
@@ -62,9 +64,30 @@ class MessageCreateView(CreateView):
 		return Group.objects.get(pk = group)
 
 	def get_context_data(self, **kwargs):
+		group = Group.objects.get(pk = self.args[0])
+
 		context = super(MessageCreateView, self).get_context_data(**kwargs)
-		context['message_list'] = Message.objects.all().order_by('-id')
+		message_list = Message.objects.filter(group = group)
+
+		context['message_list'] = message_list.order_by('-id')
+		context['group'] = group
 		context['css_list'] = ['css/message.css']
 		context['js_list'] = ['js/message.js']
+
+		return context
+
+class TagListView(ListView):
+
+	model = Tag
+	template_name = 'tag/index.html'
+
+	def get_context_data(self, **kwargs):
+		group = Group.objects.get(pk = self.args[0])
+
+		context = super(TagListView, self).get_context_data(**kwargs)
+
+		context['tag_list'] = Tag.objects.filter(group = group).order_by('-update_date')
+		context['group'] = group
+		context['css_list'] = ['css/tag.css']
 
 		return context

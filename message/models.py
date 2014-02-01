@@ -8,7 +8,11 @@ from django.contrib.auth.models import User, Group
 class Tag(models.Model):
 
 	body       = models.CharField(max_length = 64)
-	updateDate = models.DateTimeField(auto_now_add = True)
+	update_date = models.DateTimeField(auto_now = True)
+	group      = models.ForeignKey(Group)
+
+	def formatedDatetime(self):
+		return self.update_date.strftime('%Y-%m-%d %H:%M')
 
 	def __unicode__(self):
 		return self.body
@@ -20,7 +24,7 @@ class TagForm(ModelForm):
 class Message(models.Model):
 
 	body     = models.TextField()
-	datetime = models.DateTimeField(u'送信日時', auto_now_add = True)
+	datetime = models.DateTimeField(u'送信日時', auto_now = True)
 	ref      = models.ForeignKey('self', null = True, blank = True)
 	tag      = models.ForeignKey(Tag, null = True, blank = True, related_name = 'tag')
 	user     = models.ForeignKey(User)
@@ -37,7 +41,7 @@ class MessageForm(ModelForm):
 	body       = forms.CharField(label = '', widget = forms.Textarea(attrs = {'class' : 'class_form_input', 'cols' : 80, 'rows' : 5}))
 	tag_create = forms.CharField(label = '', required = False, widget = forms.TextInput(attrs = {'class' : 'class_form_input'}))
 	ref        = forms.ModelChoiceField(queryset = Message.objects.all().order_by('-id'), label = '', required = False, widget = forms.Select(attrs = {'class' : 'class_form_input'}))
-	tag        = forms.ModelChoiceField(queryset = Tag.objects.all().order_by('updateDate'), label = '', required = False, widget = forms.Select(attrs = {'class' : 'class_form_input'}))
+	tag        = forms.ModelChoiceField(queryset = Tag.objects.all().order_by('update_date'), label = '', required = False, widget = forms.Select(attrs = {'class' : 'class_form_input'}))
 
 	class Meta:
 		model = Message
