@@ -1,9 +1,11 @@
 {% extends "common/base.html" %}
 {% load staticfiles %}
-{% block title %}{{ group.name }} message{% endblock %}
+{% block title %}{{ group.name }} メッセージ{% endblock %}
 
 {% block main %}
+	<h2 id="id_function_name">{{ group.name }}</h2>
 	<form id="id_form_form" method="post" action="/message/create/">
+		<input type="hidden" name="group" value="{{ group.id }}" />
 		<p id="id_form_body">{{ form.body }}</p>
 		<p id="id_form_ref">ref : {{ form.ref }}</p>
 		<p id="id_form_tag">tag : {{ form.tag }} or {{ form.tag_create }}</p>
@@ -13,7 +15,9 @@
 	{% for message in message_list %}
 		<div class="class_message">
 			<p class="class_username">{{ message.user.username }}</p>
+
 			<p class="class_datetime">{{ message.formatedDatetime }}</p>
+
 			<p class="class_body">
 				{{ message.body|linebreaksbr }}
 				<img id="id_re_parts_{{ forloop.counter }}" class="class_re_parts" src="{% static "image/re.png" %}" value="{{ forloop.counter }}" />
@@ -24,10 +28,12 @@
 				<span>&nbsp;&gt;&gt;&gt;&nbsp;</span>
 				<input type="hidden" id="id_ref_{{ forloop.counter }}" value="{{ message.ref.id }}" />
 			{% endif %}
+
 			{% if message.tag %}
 				<p class="class_tag">#{{ message.tag.body }}</p>
 				<input type="hidden" id="id_tag_{{ forloop.counter }}" value="{{ message.tag.id }}" />
 			{% endif %}
+
 		</div>
 	{% empty %}
 		<p>No messages.</p>

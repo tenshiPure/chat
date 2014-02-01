@@ -36,7 +36,7 @@ urlpatterns = patterns('',
 		)
 	),
 
-	url(r'^message/$',
+	url(r'^message/(\d+)/(\w*)$',
 		MessageFormView.as_view()
 	),
 
