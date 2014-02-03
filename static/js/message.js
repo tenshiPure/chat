@@ -3,6 +3,7 @@ $(function() {
 	$('.class_form_input').keyup(up);
 	$('#id_tag').change(change);
 	$('.class_re_parts').click(setInit);
+	$('#id_body').focus();
 });
 
 submit_key = function(e) {

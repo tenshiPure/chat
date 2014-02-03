@@ -8,7 +8,9 @@ from message.views import MessageFormView, MessageCreateView, TagListView
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/',
+		include(admin.site.urls)
+	),
 
 	url(r'^login/$',
 		'django.contrib.auth.views.login',
@@ -18,6 +20,10 @@ urlpatterns = patterns('',
 	url(r'^logout/$',
 		'django.contrib.auth.views.logout',
 		{'template_name' : 'common/logout.html'}
+	),
+
+	url(r'^dev/delete/$',
+		'message.views.dev_delete'
 	),
 
 	url(r'^user/form/$',

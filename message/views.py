@@ -4,6 +4,12 @@ from django.views.generic import ListView, FormView, CreateView
 
 from message.models import Message, MessageForm, Tag
 
+def dev_delete(request):
+	Tag.objects.all().delete()
+	Message.objects.all().delete()
+	return redirect('/message/1')
+
+
 class MessageFormView(FormView):
 
 	template_name = 'message/form.html'
@@ -50,10 +56,10 @@ class MessageCreateView(CreateView):
 			result.save()
 			return result
 		elif create:
-			result = Tag.objects.filter(body = create).filter(group = group)[0]
+			result = Tag.objects.filter(body = create).filter(group = group)
 			if result:
-				result.save()
-				return result
+				result[0].save()
+				return result[0]
 			else:
 				result = Tag(body = create, group = group)
 				result.save()
