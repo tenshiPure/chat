@@ -8,11 +8,11 @@ from django.contrib.auth.models import User, Group
 class Tag(models.Model):
 
 	body       = models.CharField(max_length = 64)
-	update_date = models.DateTimeField(auto_now = True)
+	last_used = models.DateTimeField(auto_now = True)
 	group      = models.ForeignKey(Group)
 
 	def formatedDatetime(self):
-		return self.update_date.strftime('%Y-%m-%d %H:%M')
+		return self.last_used.strftime('%Y-%m-%d %H:%M')
 
 	def __unicode__(self):
 		return self.body
@@ -38,11 +38,53 @@ class Message(models.Model):
 
 class MessageForm(ModelForm):
 
-	body       = forms.CharField(label = '', widget = forms.Textarea(attrs = {'class' : 'class_form_input', 'cols' : 80, 'rows' : 5}))
-	tag_create = forms.CharField(label = '', required = False, widget = forms.TextInput(attrs = {'class' : 'class_form_input'}))
-	ref        = forms.ModelChoiceField(queryset = Message.objects.all().order_by('-id'), label = '', required = False, widget = forms.Select(attrs = {'class' : 'class_form_input'}))
-	tag        = forms.ModelChoiceField(queryset = Tag.objects.all().order_by('update_date'), label = '', required = False, widget = forms.Select(attrs = {'class' : 'class_form_input'}))
-
 	class Meta:
 		model = Message
 		exclude = ('user', 'group')
+
+	def __init__(self, *args, **kwargs):
+		group = kwargs.get('group', False)
+		if group:
+			kwargs.pop('group')
+
+		super(MessageForm, self).__init__(*args, **kwargs)
+
+		self.fields['body'] = forms.CharField(
+			label = '',
+			widget = forms.Textarea(
+				attrs = {
+					'class' : 'class_form_input',
+					'cols' : 80,
+					'rows' : 5
+				}
+			)
+		)
+		self.fields['tag_create'] = forms.CharField(
+			label = '',
+			required = False,
+			widget = forms.TextInput(
+				attrs = {
+					'class' : 'class_form_input'
+				}
+			)
+		)
+		self.fields['ref'] = forms.ModelChoiceField(
+			queryset = Message.objects.filter(group = group).order_by('-id'),
+			label = '',
+			required = False,
+			widget = forms.Select(
+				attrs = {
+					'class' : 'class_form_input'
+				}
+			)
+		)
+		self.fields['tag'] = forms.ModelChoiceField(
+			queryset = Tag.objects.filter(group = group).order_by('last_used'),
+			label = '',
+			required = False,
+			widget = forms.Select(
+				attrs = {
+					'class' : 'class_form_input'
+				}
+			)
+		)

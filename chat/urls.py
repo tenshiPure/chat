@@ -3,7 +3,6 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import admin
 from django.views.generic import CreateView, FormView
 
-from message.models import MessageForm
 from message.views import MessageFormView, MessageCreateView, TagListView
 
 admin.autodiscover()

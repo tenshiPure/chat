@@ -21,6 +21,7 @@ class MessageFormView(FormView):
 		context['group'] = group
 		context['css_list'] = ['css/message.css']
 		context['js_list'] = ['js/message.js']
+		context['form'] = MessageForm(group = group)
 
 		return context
 
@@ -86,7 +87,7 @@ class TagListView(ListView):
 
 		context = super(TagListView, self).get_context_data(**kwargs)
 
-		context['tag_list'] = Tag.objects.filter(group = group).order_by('-update_date')
+		context['tag_list'] = Tag.objects.filter(group = group).order_by('-last_used')
 		context['group'] = group
 		context['css_list'] = ['css/tag.css']
 
