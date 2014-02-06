@@ -1,8 +1,8 @@
 from django.conf.urls import patterns, include, url
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib import admin
 from django.views.generic import CreateView, FormView
 
+from message.models import UserForm
 from message.views import MessageFormView, MessageCreateView, TagListView
 
 admin.autodiscover()
@@ -28,14 +28,14 @@ urlpatterns = patterns('',
 
 	url(r'^user/form/$',
 		FormView.as_view(
-			form_class = UserCreationForm,
+			form_class = UserForm,
 			template_name = 'user/form.html'
 		)
 	),
 
 	url(r'^user/create/$',
 		CreateView.as_view(
-			form_class = UserCreationForm,
+			form_class = UserForm,
 			template_name = 'user/form.html',
 			success_url = '/user/form'
 		)

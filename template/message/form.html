@@ -14,7 +14,7 @@
 
 	{% for message in message_list %}
 		<div class="class_message">
-			<p class="class_username">{{ message.user.username }}</p>
+			<p class="class_username">{{ message.user.last_name }}{{ message.user.first_name }}</p>
 
 			<p class="class_datetime">{{ message.formatedDatetime }}</p>
 

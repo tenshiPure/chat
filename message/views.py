@@ -37,38 +37,15 @@ class MessageCreateView(CreateView):
 	template_name = 'message/form.html'
 
 	def form_valid(self, form):
-		group = self.createGroup(self.request.POST['group'])
+		group = Group.objects.get(pk = self.request.POST['group'])
 		body  = self.request.POST['body']
-		ref   = self.createRef(self.request.POST['ref'])
-		tag   = self.createTag(self.request.POST['tag'], self.request.POST['tag_create'], group)
+		ref   = Message.objects.get(pk = self.request.POST['ref']) if self.request.POST['ref'] else None
+		tag   = Tag.tagging(self.request.POST['tag'], self.request.POST['tag_create'], group)
 
 		object = Message(body = body, tag = tag, ref = ref, user = self.request.user, group = group)
 		object.save()
 
 		return redirect('/message/' + self.request.POST['group'])
-
-	def createRef(self, ref):
-		return Message.objects.get(pk = ref) if ref else None
-
-	def createTag(self, tag, create, group):
-		if tag:
-			result = Tag.objects.get(pk = tag)
-			result.save()
-			return result
-		elif create:
-			result = Tag.objects.filter(body = create).filter(group = group)
-			if result:
-				result[0].save()
-				return result[0]
-			else:
-				result = Tag(body = create, group = group)
-				result.save()
-				return result
-		else:
-			return None
-
-	def createGroup(self, group):
-		return Group.objects.get(pk = group)
 
 	def get_context_data(self, **kwargs):
 		group = Group.objects.get(pk = self.args[0])

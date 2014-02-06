@@ -1,18 +1,45 @@
 #-*- coding: utf-8 -*-
 
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
 from django.forms import ModelForm
 from django.db import models
+
 from django.contrib.auth.models import User, Group
+
+class UserForm(UserCreationForm):
+    first_name = forms.CharField(max_length = 32)
+    last_name = forms.CharField(max_length = 32)
+
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name')
 
 class Tag(models.Model):
 
-	body       = models.CharField(max_length = 64)
+	body      = models.CharField(max_length = 64)
 	last_used = models.DateTimeField(auto_now = True)
-	group      = models.ForeignKey(Group)
+	group     = models.ForeignKey(Group)
 
 	def formatedDatetime(self):
 		return self.last_used.strftime('%Y-%m-%d %H:%M')
+
+	@staticmethod
+	def tagging(tag, create, group):
+		if not tag and not create:
+			return None
+
+		if tag:
+			result = Tag.objects.get(pk = tag)
+		elif create:
+			rows = Tag.objects.filter(body = create).filter(group = group)
+			if rows:
+				result = rows[0]
+			else:
+				result = Tag(body = create, group = group)
+
+		result.save()
+		return result
 
 	def __unicode__(self):
 		return self.body
@@ -26,7 +53,7 @@ class Message(models.Model):
 	body     = models.TextField()
 	datetime = models.DateTimeField(u'送信日時', auto_now = True)
 	ref      = models.ForeignKey('self', null = True, blank = True)
-	tag      = models.ForeignKey(Tag, null = True, blank = True, related_name = 'tag')
+	tag      = models.ForeignKey(Tag, null = True, blank = True)
 	user     = models.ForeignKey(User)
 	group    = models.ForeignKey(Group)
 
@@ -69,7 +96,8 @@ class MessageForm(ModelForm):
 			)
 		)
 		self.fields['ref'] = forms.ModelChoiceField(
-			queryset = Message.objects.filter(group = group).order_by('-id'),
+#			queryset = Message.objects.filter(group = group).order_by('-id'),
+			queryset = Message.objects.all().order_by('-id'),
 			label = '',
 			required = False,
 			widget = forms.Select(
@@ -79,7 +107,8 @@ class MessageForm(ModelForm):
 			)
 		)
 		self.fields['tag'] = forms.ModelChoiceField(
-			queryset = Tag.objects.filter(group = group).order_by('last_used'),
+#			queryset = Tag.objects.filter(group = group).order_by('last_used'),
+			queryset = Tag.objects.all().order_by('last_used'),
 			label = '',
 			required = False,
 			widget = forms.Select(
